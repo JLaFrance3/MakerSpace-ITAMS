@@ -1,24 +1,29 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import express, {type Request, type Response} from "express";
+import cors from "cors";
+// import fs from 'fs';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const app = express();
+const port = 3000;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const main = async () => {
+  await initializeServer();
+}
+
+const initializeServer = async () => {
+
+  app.use(
+    cors({
+      origin: ["*"]
+    })
+  );
+
+  app.get('/', (req: Request, res: Response) => {
+    res.send('Hello from TS Express!');
+  });
+
+  app.listen(port, () => {
+    console.log(`Listening on port: ${port}`);
+  })
+}
+
+main();
