@@ -4,7 +4,7 @@
  * from the database entirely
  */
 
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button } from 'react-bootstrap';
 
 type ModalProps = {
   show: boolean;
