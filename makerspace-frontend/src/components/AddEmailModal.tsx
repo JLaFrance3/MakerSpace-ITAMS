@@ -1,7 +1,7 @@
 /**
  * AddEmailModal.tsx
  * A modal that will pop up with an input field to allow
- * users to enter a new email into the mailing list
+ * users to enter a new email into the mailing list.
  */
 
 import { Modal, Button, Form } from 'react-bootstrap';

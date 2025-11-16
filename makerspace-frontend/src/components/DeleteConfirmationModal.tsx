@@ -1,7 +1,7 @@
 /**
  * DeleteConfirmationModal.tsx
  * A modal that will pop up to confirm users intent to delete an item
- * from the database entirely
+ * from the database entirely.
  */
 
 import { Modal, Button } from 'react-bootstrap';
