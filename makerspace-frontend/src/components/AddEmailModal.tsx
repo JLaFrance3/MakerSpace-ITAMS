@@ -26,6 +26,7 @@ function AddEmailModal({ show, onCancel, onSave }: ModalProps) {
   }, [show]);
 
   // Minor email validation
+  // https://react-bootstrap.netlify.app/docs/forms/validation
   const isInvalid = !email || email.includes(' ') || email.includes('@');
 
   // Handle saving email

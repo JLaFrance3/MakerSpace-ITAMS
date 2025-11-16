@@ -4,15 +4,16 @@
  * to adjust item quantities
  */
 
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 type ModalProps = {
   show: boolean;
   onCancel: () => void;
   onSave: (newQuantity: number) => void;
-  itemName: string;
-  currentQuantity: number;
+  itemName: string; // Name of item to be edited
+  currentQuantity: number; // Current item quantity
+  itemUnits?: string; // Optional units to be displayed alongside form
 };
 
 function EditItemModal({
@@ -21,23 +22,31 @@ function EditItemModal({
   onSave,
   itemName,
   currentQuantity,
+  itemUnits,
 }: ModalProps) {
   const [quantity, setQuantity] = useState('');
+  const [validated, setValidated] = useState(false);
 
   // Update modal on open with current quantity of item
   useEffect(() => {
-    if (show) setQuantity(String(currentQuantity));
+    if (show) {
+      setQuantity(String(currentQuantity));
+      setValidated(false);
+    }
   }, [show, currentQuantity]);
+
+  // Data validation
+  const numQuantity = parseInt(quantity, 10); // Convert string to int
+  const isInvalid =
+    quantity.trim() === '' ||
+    isNaN(numQuantity) ||
+    numQuantity < 0 ||
+    numQuantity > 9999;
 
   // handle saving
   const handleSave = () => {
-    const numQuantity = parseInt(quantity, 10); // Convert string to int
-
-    // Validation
-    if (isNaN(numQuantity) || numQuantity < 0) {
-      //TODO: Red outline? Error message?
-      return;
-    }
+    setValidated(true);
+    if (isInvalid) return;
 
     onSave(numQuantity);
   };
@@ -48,16 +57,25 @@ function EditItemModal({
         <Modal.Title>Edit {itemName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form noValidate>
           <Form.Group controlId="formItemQuantity">
             <Form.Label>New Quantity</Form.Label>
-            <Form.Control
-              type="number"
-              min="0"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              autoFocus
-            />
+            <InputGroup>
+              <Form.Control
+                type="number"
+                min="0"
+                max="9999"
+                required
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                autoFocus
+                isInvalid={validated && isInvalid}
+              />
+              {itemUnits && <InputGroup.Text>{itemUnits}</InputGroup.Text>}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid quantity.
+              </Form.Control.Feedback>
+            </InputGroup>
           </Form.Group>
         </Form>
       </Modal.Body>
