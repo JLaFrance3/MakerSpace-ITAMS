@@ -1,0 +1,66 @@
+/* Brandon McCrave 11/16/2025 Initial Creation
+11/18 2:29 Am worked on 
+*/
+
+
+.manage-inventory-header {
+  min-height: 100vh;
+  background-color: #020726;
+  color: #fff;
+}
+
+.manage-inventory-title {
+  text-align: center;
+  padding: 20px;
+  font-size: 2.5rem;
+}
+
+.dashboard-links {
+  background-color: #003168;
+  padding: 8px 40px;
+  display: flex;
+  gap: 32px;
+  border-bottom: 3px solid #020726;
+}
+
+.mi-nav-link {
+  color: #e6f3ff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 3px;
+}
+
+.mi-nav-link:hover {
+  color: #ffeb3b;
+  text-decoration: none;
+  border-bottom: 2px solid #ffeb3b;
+}
+
+.mi-nav-link-active {
+  color: #ffeb3b;
+  border-bottom: 2px solid #ffeb3b;
+}
+
+.manage-inventory {
+
+}
+
+.mi-inventory-card {
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.mi-inventory-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #111111;
+}
+
+.mi-inventory-card .card-text {
+  font-size: 0.9rem;
+  color: #333333;
+}
