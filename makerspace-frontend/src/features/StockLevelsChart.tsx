@@ -70,27 +70,25 @@ function StockLevelsChart() {
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
 
   return (
-    <Container className="my-4" style={{ width: 800, height: 400 }}>
-      <h3>Stock Levels</h3>
-      <Container fluid style={{ height: '100%' }}>
-        <ResponsiveContainer width={600} height={300}>
-          <BarChart
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            {/*<CartesianGrid strokeDasharray={'3 3'} />*/}
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Bar dataKey="quantity" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Container>
-    </Container>
+    <>
+      <h1>Stock Levels</h1>
+      <ResponsiveContainer width="100%" aspect={1.618} maxHeight={500}>
+        <BarChart
+          data={data}
+          margin={{
+            top: 20,
+            right: 0,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid strokeDasharray={'3 3'} />
+          <Bar dataKey="total" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+    </>
   );
 }
 
