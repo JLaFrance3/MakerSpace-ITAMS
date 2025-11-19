@@ -1,6 +1,6 @@
 import './App.css';
-import StockLevelsChart from './features/StockLevelsChart';
-import { ActivityChart } from './features/StorageActivityChart';
+// import StockLevelsChart from './features/StockLevelsChart';
+// import { ActivityChart } from './features/StorageActivityChart';
 import AddEmailModal from './components/AddEmailModal';
 import AddItemModal from './components/AddItemModal';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
@@ -11,6 +11,8 @@ import ExportDataModal, {
 import type { Category, NewItem } from './types';
 import { Button, Container } from 'react-bootstrap';
 import { useState } from 'react';
+import { Dashboard } from './Dashboard';
+import { ManageInventory } from './ManageInventory';
 
 const FAKE_CATEGORIES: Category[] = [
   { categoryID: 1, categoryName: 'Wood', units: 'pcs' },
@@ -78,9 +80,9 @@ function App() {
         </Button>
       </div>
 
-      <h2>Charts</h2>
-      <ActivityChart></ActivityChart>
-      <StockLevelsChart />
+      <h2></h2>
+      <Dashboard></Dashboard>
+      <ManageInventory></ManageInventory>
 
       <AddEmailModal
         show={showAddEmail}

@@ -4,7 +4,9 @@
 
 
 .manage-inventory-header {
-  min-height: 100vh;
+  /* header should size to its content so cards are visible on the same screen */
+  min-height: auto;
+  padding: 1rem 0.5rem;
   background-color: #020726;
   color: #fff;
 }
@@ -13,6 +15,8 @@
   text-align: center;
   padding: 20px;
   font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffeb3b;
 }
 
 .dashboard-links {
@@ -42,21 +46,36 @@
   border-bottom: 2px solid #ffeb3b;
 }
 
-.manage-inventory {
+.ManageInventory-Header-Title {
+  text-align: center;
+  padding: 8px 0;
+}
 
+.manage-inventory {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0.5rem auto 2rem;
 }
 
 .mi-inventory-card {
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .mi-inventory-card .card-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
   color: #111111;
 }
 
