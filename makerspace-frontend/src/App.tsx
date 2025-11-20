@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from './Dashboard';
 import { ManageInventory } from './ManageInventory';
+import Login from './Login';
+import MailingList from './MailingList';
 
 const FAKE_CATEGORIES: Category[] = [
   { categoryID: 1, categoryName: 'Wood', units: 'pcs' },
@@ -63,9 +65,11 @@ function App() {
       <Routes>
         <Route path="/manage-inventory" element={<ManageInventory />} />
         <Route path="/home" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/mailing-list" element={<MailingList />} />
 
         <Route
-          path="/"
+          path="/test"
           element={
             <Container fluid className="my-4">
               <h1>ITAMS Dashboard Component Testing</h1>

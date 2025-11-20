@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./Login.css";
 import quinnipacLogo from './assets/Logo.svg'
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
     const handleLogin = (): void => {
-        setErrorMessage("Invalid username or password.");
+        navigate('/home');
     }
 
     return (
