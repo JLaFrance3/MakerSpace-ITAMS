@@ -16,6 +16,7 @@ import {
 } from 'recharts';
 // import type { Item } from '../types/index.ts';
 import { Alert, Container, Spinner } from 'react-bootstrap';
+// import { setChartData } from 'recharts/types/state/chartDataSlice';
 
 type ChartData = {
   name: string;
@@ -59,9 +60,30 @@ function StockLevelsChart() {
       },
     ];
 
+    
     setData(fakeChartData); //TODO: set chart data with http response
     setLoading(false);
   }, []);
+  const fakeChartData1: ChartData[] = [
+    {
+      name: 'ABS Filament',
+      total: 30,
+      lowThreshold: 20,
+      units: 'meters',
+    },
+    {
+      name: 'PLA Filament',
+      total: 15,
+      lowThreshold: 20,
+      units: 'meters',
+    },
+    {
+      name: 'SBU Filament',
+      total: 15,
+      lowThreshold: 8,
+      units: 'meters',
+    },
+  ];
 
   // Loading spinner
   if (loading) return <Spinner animation="border" />;
@@ -85,7 +107,8 @@ function StockLevelsChart() {
           <XAxis dataKey="name" />
           <YAxis />
           <CartesianGrid strokeDasharray={'3 3'} />
-          <Bar dataKey="total" fill="#8884d8" />
+          <Bar dataKey="total" fill="#8884d8" onClick={(e) => {setData(fakeChartData1)}
+          }/>
         </BarChart>
       </ResponsiveContainer>
     </>
