@@ -14,7 +14,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import type { Item } from '../types/index.ts';
+// import type { Item } from '../types/index.ts';
 import { Alert, Container, Spinner } from 'react-bootstrap';
 
 type ChartData = {
