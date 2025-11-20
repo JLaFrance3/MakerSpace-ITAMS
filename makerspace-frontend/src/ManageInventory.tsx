@@ -42,16 +42,16 @@ export function ManageInventory() {
         </div>
 
         <nav className="dashboard-links d-flex">
-          <a href="#home" className="mi-nav-link">
+          <a href="/home" className="mi-nav-link">
             Home
           </a>
-          <a href="#notifications" className="mi-nav-link">
+          <a href="/mailing-list" className="mi-nav-link">
             Notifications
           </a>
-          <a href="#manage" className="mi-nav-link mi-nav-link-active">
+          <a href="/manage-inventory" className="mi-nav-link mi-nav-link-active">
             Manage Inventory
           </a>
-          <a href="#logout" className="mi-nav-link">
+          <a href="/" className="mi-nav-link">
             Logout
           </a>
         </nav>

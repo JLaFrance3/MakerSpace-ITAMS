@@ -26,11 +26,11 @@ export function Dashboard() {
                 </div>
 
                 <nav className="dashboard-links">
-                    <Link to="/">Home</Link>
-                    <Link to="#">Notifications</Link>
+                    <Link to="/home">Home</Link>
+                    <Link to="/mailing-list">Notifications</Link>
                     <Link to="/manage-inventory">Manage Inventory</Link>
 
-                    <Link to="#">Logout</Link>
+                    <Link to="/">Logout</Link>
                 </nav>
             </header>
 

@@ -27,7 +27,22 @@ function MailingList() {
                 <img className="logo" src={quinnipacLogo}/>
                 <p className="login-text">Mailing List</p>
             </div>
+            <nav className="dashboard-links d-flex">
+          <a href="/home" className="mi-nav-link">
+            Home
+          </a>
+          <a href="/mailing-list" className="mi-nav-link mi-nav-link-active">
+            Notifications
+          </a>
+          <a href="/manage-inventory" className="mi-nav-link">
+            Manage Inventory
+          </a>
+          <a href="/" className="mi-nav-link">
+            Logout
+          </a>
+        </nav>
             <div className="bottom">
+                
                 <h2 className="header">Email</h2>
                 <button className="add-email" onClick={() => setShow(true)}>+Add Email</button>
                 <div className="emails">
