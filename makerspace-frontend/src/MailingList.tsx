@@ -1,7 +1,6 @@
 import "./MailingList.css";
 import quinnipacLogo from './assets/Logo.svg'
 import email_symbol from './assets/mail.svg'
-import edit_symbol from './assets/edit.svg'
 import delete_symbol from './assets/delete.svg'
 import {useState} from "react";
 import AddEmailModal from "./components/AddEmailModal.tsx";
@@ -51,7 +50,6 @@ function MailingList() {
                             <img className="email" src={email_symbol}/>
                             <div className="address-box">
                                 <h2>{email}</h2>
-                                <p>Example Name</p>
                             </div>
                             {/*<img className="edit" src={edit_symbol}/>*/}
                             <img className="delete" src={delete_symbol} onClick={() => setEmails(emails.filter(item => item != email))}/>
