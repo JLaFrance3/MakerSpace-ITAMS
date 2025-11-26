@@ -17,6 +17,7 @@ import { ManageInventory } from './ManageInventory';
 import Login from './Login';
 import MailingList from './MailingList';
 import type { JSX } from "react/jsx-runtime";
+import { useCookies } from 'react-cookie';
 
 const FAKE_CATEGORIES: Category[] = [
     {categoryID: 1, categoryName: 'Wood', units: 'pcs'},
@@ -61,24 +62,32 @@ function App() {
         setShowExport(false);
     };
 
-    const [isLoggedIn, setisLoggedIn] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies(['loggedIn']);
 
     // Redirects to the login if the user is authenticated.
     function checkForAuthentication(element: JSX.Element) {
-      if (isLoggedIn) {
+      if (cookies.loggedIn) {
           return element
       }
       else {
           return <Navigate to="/" />
       }
-  }
+    }
+
+    function logIn() {
+        setCookie("loggedIn", true);
+    }
+
+    function logOut() {
+        removeCookie("loggedIn");
+        }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/manage-inventory" element={checkForAuthentication(<ManageInventory />)} />
         <Route path="/home" element={checkForAuthentication(<Dashboard />)} />
-        <Route path="/" element={<Login setIsLoggedIn={setisLoggedIn} />} />
+        <Route path="/" element={cookies.loggedIn ? <Navigate to="/home" /> : <Login setIsLoggedIn={logIn} />} />
         <Route path="/mailing-list" element={checkForAuthentication(<MailingList />)} />
 
         <Route

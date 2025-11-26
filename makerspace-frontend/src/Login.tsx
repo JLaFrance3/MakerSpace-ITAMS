@@ -1,13 +1,17 @@
-import { useState } from "react";
+import {FormEventHandler, type SyntheticEvent, useState} from "react";
 import "./Login.css";
 import quinnipacLogo from './assets/Logo.svg'
 import { useNavigate } from "react-router-dom";
+import {Button, Form} from "react-bootstrap";
+import * as events from "node:events";
 
-function Login({setIsLoggedIn}: { setIsLoggedIn: (value: boolean) => void }) {
+function Login({setIsLoggedIn}: { setIsLoggedIn: () => void }) {
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const handleLogin = (): void => {
-        setIsLoggedIn(true);
+
+    function handleLogin(event: SyntheticEvent<HTMLFormElement>): void {
+        event.preventDefault()
+        setIsLoggedIn();
         navigate('/home');
     }
 
@@ -17,12 +21,12 @@ function Login({setIsLoggedIn}: { setIsLoggedIn: (value: boolean) => void }) {
                 <img className="logo" src={quinnipacLogo}/>
                 <p className="login-text">Login</p>
             </div>
-            <div className="bottom">
-                <input className="input-field" type="text" placeholder="Username" />
-                <input className="input-field" type="password" placeholder="Password" />
-                <button className="login-button" onClick={handleLogin}>Login</button>
+            <Form className="bottom" onSubmit={handleLogin}>
+                <Form.Control name="username" className="input-field" type="text" placeholder="Username" />
+                <Form.Control name="password" className="input-field" type="password" placeholder="Password" />
+                <Button type="submit" className="login-button">Login</Button>
                 <p className="error-text">{errorMessage}</p>
-            </div>
+            </Form>
         </div>
     );
 }
