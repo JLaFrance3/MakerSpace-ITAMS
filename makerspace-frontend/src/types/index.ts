@@ -1,3 +1,5 @@
+export const BACKEND_URL = 'http://localhost:3000';
+
 export type Category = {
   categoryID: number;
   categoryName: string;
@@ -9,10 +11,11 @@ export type NewCategory = {
   units: string;
 };
 
-export type Item = {
+export type InventoryItem = {
   itemID: number;
   categoryID: number;
   itemName: string;
+  description?: string;
   quantity: number;
   lowThreshold: number;
   color?: string;

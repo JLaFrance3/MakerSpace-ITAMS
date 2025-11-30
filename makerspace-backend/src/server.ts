@@ -2,6 +2,7 @@ import express, {type Request, type Response} from "express";
 import cors from "cors";
 import {createClient} from "@supabase/supabase-js";
 import config from "./config.json";
+import { getItem } from "./router/itemRouter";
 // import fs from 'fs';
 
 const app = express();
@@ -18,7 +19,7 @@ const initializeServer = async () => {
 
   app.use(
     cors({
-      origin: ["*"]
+      origin: ["http://localhost:3000", "http://localhost:5173"]
     })
   );
 
@@ -28,6 +29,31 @@ const initializeServer = async () => {
     });
     // res.send('Hello from TS Express!');
   });
+
+  app.get('/items', (req: Request, res: Response) => {
+    try {
+      const items = getItem().then((result) => {
+        return res.status(200).send(result.data)
+      });
+
+
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error"});
+    }
+  })
+
+  app.get('/items/:id', (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const items = getItem(id).then((result) => {
+        return res.status(200).send(result.data)
+      });
+
+
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error"});
+    }
+  })
 
   app.listen(port, () => {
     console.log(`Listening on port: ${port}`);

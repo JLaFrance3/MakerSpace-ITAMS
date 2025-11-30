@@ -1,25 +1,34 @@
 // Brandon McCrave 11/16/2025 Initial Creation
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ManageInventory.css';
 import EditItemModal from './components/EditItemModal';
 import { Button } from 'react-bootstrap';
+import { type InventoryItem } from './types';
+import { getItem, getItems } from './service/item_service';
 
-type InventoryItem = {
-  id: number;
-  name: string;
-  description?: string;
-  amount: number;
-};
+// const INVENTORY_ITEMS: Array<InventoryItem> = new Array<InventoryItem>;
 
-const INVENTORY_ITEMS: InventoryItem[] = [
-  { id: 1, name: 'Item 1', description: 'Description 1', amount: 10 },
-  { id: 2, name: 'Item 2', description: 'Description 2', amount: 5 },
-  { id: 3, name: 'Item 3', description: 'Description 3', amount: 8 },
-];
+// [
+//   { itemID: 1, categoryID: 1, itemName: 'Item 1', description: 'Description 1', quantity: 10, lowThreshold: 2},
+//   { itemID: 2, categoryID: 1, itemName: 'Item 2', description: 'Description 2', quantity: 5, lowThreshold: 2},
+//   { itemID: 3, categoryID: 1, itemName: 'Item 3', description: 'Description 3', quantity: 8, lowThreshold: 2},
+// ];
 
 export function ManageInventory() {
   const [showEdit, setShowEdit] = useState(false);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
+  const [INVENTORY_ITEMS, setInventoryItems] = useState<Array<InventoryItem>>([]);
+
+  useEffect(() => {
+    getItems().then((result) => {
+      setInventoryItems(result);
+    });
+
+    //debug for single item
+    getItem(1).then((result) => {
+      console.log(result)
+    });
+  }, []);
 
   const handleEditClick = (item: InventoryItem) => {
     setSelectedItem(item);
@@ -28,11 +37,12 @@ export function ManageInventory() {
 
   const handleEditItemSave = (newQuantity: number) => {
     if (selectedItem) {
-      console.log(`Editing item ${selectedItem.name} to ${newQuantity}`);
+      console.log(`Editing item ${selectedItem.itemName} to ${newQuantity}`);
     }
     setShowEdit(false);
     setSelectedItem(null);
   };
+
 
   return (
     <div className="manage-inventory-root">
@@ -62,12 +72,12 @@ export function ManageInventory() {
 
         {/* Inventory list */}
         {INVENTORY_ITEMS.map((item) => (
-          <div key={item.id} className="card mi-inventory-card mb-4">
+          <div key={item.itemID} className="card mi-inventory-card mb-4">
             <div className="card-body d-flex justify-content-between align-items-start">
               <div>
-                <h5 className="card-title mb-1">{item.name}</h5>
+                <h5 className="card-title mb-1">{item.itemName}</h5>
                 <p className="card-text mb-2">{item.description}</p>
-                <p className="card-text mb-0">Item amount: {item.amount}</p>
+                <p className="card-text mb-0">Item amount: {item.quantity}</p>
               </div>
 
               <div className="mi-card-actions d-flex flex-column align-items-end">
@@ -95,8 +105,8 @@ export function ManageInventory() {
             setSelectedItem(null);
           }}
           onSave={handleEditItemSave}
-          itemName={selectedItem?.name ?? ''}
-          currentQuantity={selectedItem?.amount ?? 0}
+          itemName={selectedItem?.itemName ?? ''}
+          currentQuantity={selectedItem?.quantity ?? 0}
         />
       </main>
     </div>

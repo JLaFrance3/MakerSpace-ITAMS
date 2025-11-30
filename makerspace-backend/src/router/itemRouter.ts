@@ -1,9 +1,24 @@
+import { createClient, type PostgrestSingleResponse } from "@supabase/supabase-js";
 import { InventoryItem } from "../models/inventory_item";
+import config from "../config.json";
 
-export function getItem(id: number | null) {
+const supabase = createClient(config.VITE_SUPABASE_URL, config.VITE_SUPABASE_PUBLISHABLE_KEY);
+
+export async function getItem(id: number | void) : Promise<PostgrestSingleResponse<Array<InventoryItem>> | PostgrestSingleResponse<InventoryItem>> {
     if (typeof id === "number") {
-        //return statement
+        const data = await supabase.from("inventory_item").select().eq('item_id', id).single();
+        const newItem : InventoryItem = new InventoryItem(data.data?.item_id, data.data?.item_name, data.data?.category_id, data.data?.quantity, data.data?.threshold);
+        data.data = newItem;
+        return data;
     } else {
-        // return statement
+        const data = await supabase.from("inventory_item").select();
+        const itemArray : Array<InventoryItem> | void = [];
+        data.data?.forEach((item) => {
+            let newItem = new InventoryItem(item.item_id, item.item_name, item.category_id, item.quantity, item.threshold)
+            itemArray.push(newItem);
+        });
+        data.data = itemArray;
+        // console.log(data)
+        return data;
     }
 }

@@ -1,27 +1,16 @@
-import {type Item } from "../types/index";
+import axios from "axios";
+import {type InventoryItem } from "../types/index";
+import { BACKEND_URL } from "../types/index";
 
-const sample: Item[] =  [
-    {
-        itemID: 1,
-        categoryID: 1,
-        itemName: "Item 1",
-        quantity: 5,
-        lowThreshold: 3
-    },
-    {
-        itemID: 2,
-        categoryID: 1,
-        itemName: "Item 1",
-        quantity: 6,
-        lowThreshold: 5,
-        color: "yellow"
-    }
-]
-
-export function getItems(): Item[] {
-    return sample;
+export async function getItems(): Promise<Array<InventoryItem>> {
+    const response = await axios.get(`${BACKEND_URL}/items`);
+    
+    // console.log(response.data)
+    return response.data;
+    // .then((items : Array<InventoryItem>) => {return items});
 }
 
-export function getItem(id: number): Item | undefined{
-    return sample.find((p) => p.itemID === id);
+export async function getItem(id: number): Promise<InventoryItem | undefined>{
+    const response = await axios.get(`${BACKEND_URL}/items/${id}`);
+    return response.data
 }
