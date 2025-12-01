@@ -10,8 +10,8 @@ import ExportDataModal, {
 } from './components/ExportDataModal';
 import type { Category, NewItem } from './types';
 import { Button, Container } from 'react-bootstrap';
-import {useEffect, useState} from 'react';
-import {BrowserRouter, Routes, Route, Navigate, useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Dashboard } from './Dashboard';
 import { ManageInventory } from './ManageInventory';
 import Login from './Login';
