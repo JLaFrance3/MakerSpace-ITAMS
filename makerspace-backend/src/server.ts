@@ -1,7 +1,7 @@
 import express, {type Request, type Response} from "express";
 import cors from "cors";
 import {createClient} from "@supabase/supabase-js";
-import config from "./config.json";
+import config from "./config_DEFAULT.json";
 import { getItem } from "./router/itemRouter";
 // import fs from 'fs';
 

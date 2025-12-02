@@ -1,6 +1,6 @@
 import { createClient, type PostgrestSingleResponse } from "@supabase/supabase-js";
 import { InventoryItem } from "../models/inventory_item";
-import config from "../config.json";
+import config from "../config_DEFAULT.json";
 
 const supabase = createClient(config.VITE_SUPABASE_URL, config.VITE_SUPABASE_PUBLISHABLE_KEY);
 
