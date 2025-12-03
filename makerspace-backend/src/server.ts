@@ -3,6 +3,8 @@ import cors from "cors";
 import { createClient } from "@supabase/supabase-js";
 import { getItem } from "./router/itemRouter";
 import fs from "fs";
+import { getUser } from "./router/userRouter";
+import { getEmail } from "./router/emailRouter";
 
 const app = express();
 const port = 3000;
@@ -54,13 +56,57 @@ const initializeServer = async () => {
   app.get("/items/:id", (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id, 10);
-      const items = getItem(id).then((result) => {
+      const item = getItem(id).then((result) => {
         return res.status(200).send(result.data);
       });
     } catch (err) {
       return res.status(500).json({ error: "Unexpected backend error" });
     }
   });
+
+  app.get("/users", (req: Request, res: Response) => {
+    try {
+      const users = getUser().then((result) => {
+        return res.status(200).send(result.data);
+      });
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error" });
+    }
+  });
+
+  app.get("/users/:id", (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const user = getUser(id).then((result) => {
+        return res.status(200).send(result.data);
+      });
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error" });
+    }
+  });
+
+  app.get("/notifications", (req: Request, res: Response) => {
+    try {
+      const emails = getEmail().then((result) => {
+        return res.status(200).send(result.data);
+      });
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error" });
+    }
+  });
+
+  // app.get("/notifications/:email", (req: Request, res: Response) => {
+  //   try {
+  //     const email = new URLSearchParams(req.params).get()
+  //     const user = getEmail(email).then((result) => {
+  //       return res.status(200).send(result.data);
+  //     });
+  //   } catch (err) {
+  //     return res.status(500).json({ error: "Unexpected backend error" });
+  //   }
+  // });
+
+  
 
   app.listen(port, () => {
     console.log(`Listening on port: ${port}`);

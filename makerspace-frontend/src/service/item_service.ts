@@ -14,3 +14,9 @@ export async function getItem(id: number): Promise<InventoryItem | undefined> {
   const response = await axios.get(`${BACKEND_URL}/items/${id}`);
   return response.data;
 }
+
+export async function postItem(item : InventoryItem) {
+  const newItem = await item;
+  const response = await axios.post(`${BACKEND_URL}/items`, {newItem})
+  return response.data;
+}
