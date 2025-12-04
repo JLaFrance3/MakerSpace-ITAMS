@@ -17,7 +17,7 @@ import {
   type TooltipContentProps,
 } from 'recharts';
 // import type { Item } from '../types/index.ts';
-import { Alert, Container, Spinner } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import { ItemDetailModal } from '../components/ItemDetailModal';
 // import { setChartData } from 'recharts/types/state/chartDataSlice';
 
