@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Card, Form, ListGroup, Modal, Button } from 'react-bootstrap';
 import { ActivityChart } from '../features/StorageActivityChart';
 import ExportDataModal from './ExportDataModal';
@@ -48,7 +48,7 @@ export default function SelectItemCard() {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return FAKE_INVENTORY.slice(0, 6);
+    if (!q) return [];
     return FAKE_INVENTORY.filter((it) => it.name.toLowerCase().includes(q) || it.category.toLowerCase().includes(q));
   }, [query]);
 
@@ -73,21 +73,27 @@ export default function SelectItemCard() {
             />
           </Form.Group>
 
-          <ListGroup className="mt-3">
-            {results.map((r) => (
-              <ListGroup.Item key={r.id} action onClick={() => handleSelect(r)}>
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <strong>{r.name}</strong>
-                    <div className="text-muted small">{r.category} • {r.unit ?? 'units'}</div>
+          {query.trim() === '' ? (
+            <div className="text-muted small mt-3">Type to search for items (e.g., PLA, Vinyl, Plywood)</div>
+          ) : results.length === 0 ? (
+            <div className="text-muted small mt-3">No items found for "{query}"</div>
+          ) : (
+            <ListGroup className="mt-3">
+              {results.map((r) => (
+                <ListGroup.Item key={r.id} action onClick={() => handleSelect(r)}>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <strong>{r.name}</strong>
+                      <div className="text-muted small">{r.category} • {r.unit ?? 'units'}</div>
+                    </div>
+                    <div className="text-end">
+                      <div>{r.quantity} {r.unit}</div>
+                    </div>
                   </div>
-                  <div className="text-end">
-                    <div>{r.quantity} {r.unit}</div>
-                  </div>
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
         </Card.Body>
       </Card>
 
@@ -111,23 +117,21 @@ export default function SelectItemCard() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDetails(false)}>Close</Button>
-          <Button variant="primary" onClick={() => { setShowExport(true); }}>
+          { <Button variant="primary" onClick={() => { setShowExport(true); }}>
             Export
-          </Button>
+          </Button> }
         </Modal.Footer>
       </Modal>
 
-      <ExportDataModal
+      { <ExportDataModal
         show={showExport}
         onCancel={() => setShowExport(false)}
         onExport={(dateRange, rangeType) => {
-          // For now, just log the export request and close the modal
-          // In the future this can call an API with the selected item
-          // dateRange is the date picked, rangeType is days/weeks etc per modal
+      
           console.log('Export requested for', selected?.name, { dateRange, rangeType });
           setShowExport(false);
         }}
-      />
+      /> }
     </>
   );
 }
