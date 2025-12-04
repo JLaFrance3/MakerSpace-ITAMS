@@ -13,6 +13,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Calendar } from 'react-bootstrap-icons';
 import { CSVLink } from 'react-csv';
+import styles from './ExportDataModal.module.css';
 
 // Options for dropdown menu
 const DATE_RANGE_OPTIONS = [
@@ -122,7 +123,7 @@ function ExportDataModal({ show, onCancel, onExport, csvData }: ModalProps) {
           Cancel
         </Button>
         <Button variant="primary">
-          <CSVLink data={csvData} filename={'inventory-data.csv'}>
+          <CSVLink data={csvData} filename={'inventory-data.csv'} className={styles['CSVLink']}>
             Export
           </CSVLink>
         </Button>
