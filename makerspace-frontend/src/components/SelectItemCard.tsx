@@ -117,13 +117,13 @@ export default function SelectItemCard() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDetails(false)}>Close</Button>
-          { <Button variant="primary" onClick={() => { setShowExport(true); }}>
+          {/* { <Button variant="primary" onClick={() => { setShowExport(true); }}>
             Export
-          </Button> }
+          </Button> } */}
         </Modal.Footer>
       </Modal>
 
-      { <ExportDataModal
+      {/* { <ExportDataModal
         show={showExport}
         onCancel={() => setShowExport(false)}
         onExport={(dateRange, rangeType) => {
@@ -131,7 +131,7 @@ export default function SelectItemCard() {
           console.log('Export requested for', selected?.name, { dateRange, rangeType });
           setShowExport(false);
         }}
-      /> }
+      /> } */}
     </>
   );
 }
