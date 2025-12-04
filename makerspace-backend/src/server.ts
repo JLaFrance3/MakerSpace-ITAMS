@@ -5,6 +5,7 @@ import { getItem } from "./router/itemRouter";
 import fs from "fs";
 import { getUser } from "./router/userRouter";
 import { getEmail } from "./router/emailRouter";
+import { getCategory } from "./router/categoryRouter";
 
 const app = express();
 const port = 3000;
@@ -45,7 +46,7 @@ const initializeServer = async () => {
 
   app.get("/items", (req: Request, res: Response) => {
     try {
-      const items = getItem().then((result) => {
+      getItem().then((result) => {
         return res.status(200).send(result.data);
       });
     } catch (err) {
@@ -88,6 +89,27 @@ const initializeServer = async () => {
   app.get("/notifications", (req: Request, res: Response) => {
     try {
       const emails = getEmail().then((result) => {
+        return res.status(200).send(result.data);
+      });
+    } catch (err) {
+      return res.status(500).json({ error: "Unexpected backend error" });
+    }
+  });
+
+  app.get("/category", (req: Request, res: Response) => {
+    try {
+      getCategory().then((result) => {
+        return res.status(200).send(result.data);
+      });
+    } catch (err) {
+      return res.status(500).json({error: "Unexpected backend error"})
+    }
+  })
+
+  app.get("/category/:id", (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      getCategory(id).then((result) => {
         return res.status(200).send(result.data);
       });
     } catch (err) {

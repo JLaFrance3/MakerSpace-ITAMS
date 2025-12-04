@@ -10,7 +10,7 @@ export async function getItems(): Promise<Array<InventoryItem>> {
   // .then((items : Array<InventoryItem>) => {return items});
 }
 
-export async function getItem(id: number): Promise<InventoryItem | undefined> {
+export async function getItem(id: number): Promise<InventoryItem> {
   const response = await axios.get(`${BACKEND_URL}/items/${id}`);
   return response.data;
 }

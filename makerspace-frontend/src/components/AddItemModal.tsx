@@ -116,13 +116,7 @@ function AddItemModal({
       ...(color && { color }),
     };
 
-    // setItem({
-    //   ...newItem,
-    //   itemName,
-    //   numQuantity,
-    //   numThreshold,
-    //   color
-    // })
+    setItem(newItem);
 
     if (isAddingNew) {
       newItem.categoryName = customCategory;
