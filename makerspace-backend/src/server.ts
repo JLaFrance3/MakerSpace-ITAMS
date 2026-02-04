@@ -44,6 +44,9 @@ const initializeServer = async () => {
     // res.send('Hello from TS Express!');
   });
 
+  // =============================================================================================================================
+  // item routes
+
   app.get("/items", (req: Request, res: Response) => {
     try {
       getItem().then((result) => {
@@ -64,6 +67,13 @@ const initializeServer = async () => {
       return res.status(500).json({ error: "Unexpected backend error" });
     }
   });
+
+  app.post("/items", (req: Request, res: Response) => {
+    console.log(req);
+  })
+
+  // =============================================================================================================================
+  // user routes
 
   app.get("/users", (req: Request, res: Response) => {
     try {
@@ -86,6 +96,9 @@ const initializeServer = async () => {
     }
   });
 
+  // =============================================================================================================================
+  // notification routes
+
   app.get("/notifications", (req: Request, res: Response) => {
     try {
       const emails = getEmail().then((result) => {
@@ -95,6 +108,9 @@ const initializeServer = async () => {
       return res.status(500).json({ error: "Unexpected backend error" });
     }
   });
+
+  // =============================================================================================================================
+  // category routes
 
   app.get("/category", (req: Request, res: Response) => {
     try {
