@@ -6,3 +6,8 @@ export async function getUsers(): Promise<Array<User>> {
   const response = await axios.get(`${BACKEND_URL}/users`);
   return response.data;
 }
+
+export async function authenticateUser(username: string, password: string): Promise<Boolean> {
+  const response = await axios.post(`${BACKEND_URL}/authenticate/`, {username, password});
+  return response.data;
+}

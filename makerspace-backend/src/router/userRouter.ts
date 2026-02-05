@@ -1,12 +1,13 @@
 import {User} from "../models/user";
 import {createClient} from "@supabase/supabase-js";
 import config from "../config.json";
+import bcrypt from 'bcrypt';
 
 const supabase = createClient(config.VITE_SUPABASE_URL, config.VITE_SUPABASE_PUBLISHABLE_KEY);
 
-export async function getUser(id:number | void) {
-    if (typeof id === "number") {
-        const data = await supabase.from("user_table").select().eq('user_id', id).single();
+export async function getUser(username: string | void) {
+    if (typeof username === "string") {
+        const data = await supabase.from("user_table").select().eq('username', username).single();
         data.data = new User(data.data?.username, data.data?.hash, data.data?.is_admin);
         return data;
     } else {
@@ -19,4 +20,9 @@ export async function getUser(id:number | void) {
         data.data = itemArray;
         return data;
     }
+}
+
+export async function authenticateUser(username: string, password: string): Promise<boolean> {
+    const user = await getUser(username);
+    return bcrypt.compare(password, user.data.hash);
 }
