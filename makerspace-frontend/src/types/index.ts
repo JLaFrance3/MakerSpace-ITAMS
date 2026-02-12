@@ -1,6 +1,6 @@
 // Use relative paths in production (works with nginx proxy)
 // Use absolute localhost URL in development
-const viteApiUrl = import.meta.env.VITE_API_URL;
+const viteApiUrl = import.meta.env.VITE_API_URL || "/api";
 if (!viteApiUrl) {
   throw new Error(
     'Missing environment variable VITE_API_URL. Create makerspace-frontend/.env following the .env.example',

@@ -21,3 +21,12 @@ export async function getCategory(id: number | void) : Promise<PostgrestSingleRe
         return data;
     }
 }
+
+export async function postCategory(category: ItemCategory) {
+    const newCategory : ItemCategory = new ItemCategory(category.categoryID, category.categoryName, category.units);
+    const { data, error } = await supabase.from('category')
+    .insert({category_name: newCategory.categoryName, units: newCategory.units})
+    .select().single();
+
+    return {success: !error, data, error};
+}

@@ -5,7 +5,7 @@ import { getItem, postItem } from './router/itemRouter';
 import fs from 'fs';
 import { authenticateUser, getUser } from './router/userRouter';
 import { getEmail } from './router/emailRouter';
-import { getCategory } from './router/categoryRouter';
+import { getCategory, postCategory } from './router/categoryRouter';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -68,6 +68,7 @@ const initializeServer = async () => {
     }),
   );
   app.use(bodyParser.json());
+
 
   // =============================================================================================================================
   // item routes
@@ -188,6 +189,16 @@ const initializeServer = async () => {
       getCategory(id).then((result) => {
         return res.status(200).send(result.data);
       });
+    } catch (err) {
+      return res.status(500).json({ error: 'Unexpected backend error' });
+    }
+  });
+
+  apiRouter.post('/category', authorizeAdmin, (req: Request, res: Response) => {
+    try {
+      const category = req.body.newCategory;
+      postCategory(category);
+      return res.status(200);
     } catch (err) {
       return res.status(500).json({ error: 'Unexpected backend error' });
     }

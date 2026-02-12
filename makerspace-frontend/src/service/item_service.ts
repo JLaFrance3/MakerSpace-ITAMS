@@ -7,7 +7,6 @@ export async function getItems(): Promise<Array<InventoryItem>> {
 
   // console.log(response.data)
   return response.data;
-  // .then((items : Array<InventoryItem>) => {return items});
 }
 
 export async function getItem(id: number): Promise<InventoryItem> {
