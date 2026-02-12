@@ -2,13 +2,10 @@ import axios from 'axios';
 import { type InventoryItem, type NewItem, BACKEND_URL } from '../types/index';
 
 export async function getItems(): Promise<Array<InventoryItem>> {
-  try {
-    const response = await axios.get(`${BACKEND_URL}/items`);
-    return Array.isArray(response.data) ? response.data : [];
-  } catch (error) {
-    console.error('Error fetching items:', error);
-    return [];
-  }
+  const response = await axios.get(`${API_BASE_URL}/items`);
+
+  // console.log(response.data)
+  return response.data;
 }
 
 export async function getItem(id: number): Promise<InventoryItem | null> {

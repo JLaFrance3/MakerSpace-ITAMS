@@ -6,8 +6,9 @@
 
 import { Modal, Button, Form, InputGroup, Row, Col } from 'react-bootstrap';
 import { useState, useEffect, type ChangeEvent } from 'react';
-import type { NewItem, Category } from '../types';
+import type { NewItem, Category, NewCategory } from '../types';
 import { postItem } from '../service/item_service';
+import { postCategory } from '../service/category';
 
 type ModalProps = {
   show: boolean;
@@ -34,6 +35,12 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
     color: '',
   });
 
+  // new category state
+  const [newCategory, setCatetory] = useState<NewCategory>({
+    categoryName: '',
+    units: '',
+  })
+
   //Validation state
   const [validated, setValidated] = useState(false);
 
@@ -52,6 +59,14 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
     setItem((prevData) => ({
       ...prevData,
       [name]: Number.isNaN(parsed) ? 0 : parsed,
+    }));
+  };
+
+  const handleNewCatChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCatetory((prevData) => ({
+      ...prevData,
+      [name]: value
     }));
   };
 
@@ -76,9 +91,11 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
       lowThreshold: 0,
       color: '',
     });
-    setCategorySelection('');
-    setCustomCategory('');
-    setCustomUnits('');
+    
+    setCatetory({
+      categoryName: '',
+      units: ''
+    })
     setIsAddingNew(false);
     setValidated(false);
   };
@@ -113,7 +130,7 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
     // lowThreshold.trim() === '' ||
     isNaN(numThreshold) || numThreshold < 0 || numThreshold > 9999;
   const isExistingCategoryInvalid = !isAddingNew && !newItem.categoryName;
-  const isNewCategoryInvalid = isAddingNew && (!customCategory || !customUnits);
+  const isNewCategoryInvalid = isAddingNew && (!newCategory.categoryName || !newCategory.units);
 
   // Handle saving
   const handleSave = () => {
@@ -132,13 +149,18 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
 
     const itemToSave: NewItem = {
       ...newItem,
-      categoryName: isAddingNew ? customCategory : newItem.categoryName,
-      units: isAddingNew ? customUnits : newItem.units,
+      categoryName: isAddingNew ? newCategory.categoryName : newItem.categoryName,
+      units: isAddingNew ? newCategory.units : newItem.units,
       categoryID: isAddingNew ? null : categorySelection ? parseInt(categorySelection, 10) : null,
     };
 
+    const catToSave: NewCategory = {
+      categoryName: newCategory.categoryName,
+      units: newCategory.units
+    }
+
+    postCategory(catToSave);
     onSave(itemToSave);
-    console.log(itemToSave);
     postItem(itemToSave);
   };
 
@@ -204,8 +226,9 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
                 <Form.Label>New Category Name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={customCategory}
-                  onChange={(e) => setCustomCategory(e.target.value)}
+                  name="categoryName"
+                  value={newCategory.categoryName}
+                  onChange={handleNewCatChange}
                   required
                   isInvalid={validated && !customCategory}
                 />
@@ -217,8 +240,9 @@ function AddItemModal({ show, onCancel, onSave, existingCategories }: ModalProps
                 <Form.Label>Units (e.g., "g", "pcs", "meters")</Form.Label>
                 <Form.Control
                   type="text"
-                  value={customUnits}
-                  onChange={(e) => setCustomUnits(e.target.value)}
+                  name="units"
+                  value={newCategory.units}
+                  onChange={handleNewCatChange}
                   required
                   isInvalid={validated && !customUnits}
                 />

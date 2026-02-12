@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { type Category, BACKEND_URL } from '../types/index';
+import { type Category, type NewCategory } from '../types';
+import { API_BASE_URL } from '../types/index';
 
 export async function getCategories(): Promise<Array<Category>> {
   try {
@@ -19,4 +20,11 @@ export async function getCategory(id: number): Promise<Category | null> {
     console.error('Error fetching category:', error);
     return null;
   }
+}
+
+export async function postCategory(category: NewCategory) {
+  const newCategory = category;
+  console.log(newCategory);
+  const response = await axios.post(`${API_BASE_URL}/category`, { newCategory });
+  return response.data;
 }
