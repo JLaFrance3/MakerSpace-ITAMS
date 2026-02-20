@@ -8,6 +8,8 @@ import express, { type Request, type Response, type NextFunction } from 'express
 import multer from 'multer';
 import path from 'path';
 import dotenv from 'dotenv';
+import { spawn } from 'child_process';
+import { fileURLToPath } from 'url';
 dotenv.config();
 
 const imageRouter = express.Router();
@@ -52,7 +54,20 @@ imageRouter.post('/upload-image', authPi, upload.single('image'), (req: Request,
   const imagePath = req.file.path;
   console.log(`Image saved: ${imagePath}`);
 
-  //TODO: Spawn some python
+  // Spawn python
+  const pythonProcess = spawn('python3', [
+    '/var/www/ITAMS/backend-python/yolo_inference.py',
+    imagePath,
+  ]);
+
+  pythonProcess.stdout.on('data', (data) => {
+    console.log(`YOLO Output: ${data.toString()}`);
+    // TODO: parse output and update supabase
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`YOLO Error: ${data.toString()}`);
+  });
 
   // Return OK status
   return res.status(200).json({

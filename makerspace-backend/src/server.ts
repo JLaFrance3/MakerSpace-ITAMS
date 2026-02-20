@@ -69,7 +69,6 @@ function authorizeAdmin(req: Request, res: Response, next: NextFunction) {
   try {
     const decoded = jwt.verify(token, jwtSecret) as JwtUserPayload;
     req.user = decoded;
-    console.log(req.user.isAdmin);
     if (req.user.isAdmin) {
       next();
     } else {
