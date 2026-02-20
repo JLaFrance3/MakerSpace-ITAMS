@@ -9,5 +9,5 @@ export async function getUsers(): Promise<Array<User>> {
 
 export async function authenticateUser(username: string, password: string): Promise<string> {
   const response = await axios.post(`${API_BASE_URL}/authenticate`, { username, password });
-  return response.data;
+  return response.data.token;
 }
