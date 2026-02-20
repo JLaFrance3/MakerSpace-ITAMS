@@ -12,6 +12,7 @@ import { type JwtUserPayload } from './types/express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import imageRouter from './router/uploadRouter';
 dotenv.config();
 
 // Extend express request to include nullable user type
@@ -35,6 +36,7 @@ if (!fs.existsSync(configPath)) {
 
 const app = express();
 const apiRouter: Router = express.Router();
+apiRouter.use(imageRouter);
 
 // Check for .env file
 if (!process.env.PORT || !process.env.JWT_SECRET) {
